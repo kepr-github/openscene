@@ -1,0 +1,21 @@
+services:
+  openscene:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: openscene:latest
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    shm_size: "16gb"
+    environment:
+      - PYTHONPATH=/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
